@@ -19,8 +19,7 @@ public class TweetMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws TwitterException {
-        SearchTUI tui = new SearchTUI();
-        System.out.println("");
+        SearchTUI tui = new SearchTUI();    
     }
     
    
