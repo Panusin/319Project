@@ -20,6 +20,7 @@ public class TweetMain {
      */
     public static void main(String[] args) throws TwitterException {
         SearchTUI tui = new SearchTUI();
+        System.out.println("");
     }
     
    
