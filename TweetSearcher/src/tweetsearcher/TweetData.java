@@ -31,8 +31,8 @@ public class TweetData {
     ArrayList <Tweet> searchData = new ArrayList<>();
 
     public TweetData() throws TwitterException{
-        setSearchData();
-        //getTweetFromWeb();
+        //setSearchData();
+        getTweetFromWeb();
     }
     
     public TweetData(String fileName) {
