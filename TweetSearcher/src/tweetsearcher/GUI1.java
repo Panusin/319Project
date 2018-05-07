@@ -91,11 +91,10 @@ public class GUI1 extends javax.swing.JFrame {
         searchBox.setBorder(null);
         jPanel3.add(searchBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 146, 20));
 
-        searchBy.setBackground(new java.awt.Color(39, 57, 78));
         searchBy.setForeground(new java.awt.Color(255, 255, 255));
         searchBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Username", "Tweet" }));
         searchBy.setBorder(null);
-        jPanel3.add(searchBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(186, 9, 100, 20));
+        jPanel3.add(searchBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(186, 9, 100, 25));
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("by");
@@ -202,7 +201,8 @@ public class GUI1 extends javax.swing.JFrame {
                 "Title 1", "Title 2"
             }
         ));
-        tweetTable.setGridColor(new java.awt.Color(39, 57, 78));
+        tweetTable.setGridColor(new java.awt.Color(255, 255, 255));
+        tweetTable.setInheritsPopupMenu(true);
         tweetTable.setRowHeight(20);
         tweetTable.setSelectionBackground(new java.awt.Color(39, 57, 78));
         tweetTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -279,7 +279,7 @@ public class GUI1 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,8 +366,8 @@ public class GUI1 extends javax.swing.JFrame {
         while(it.hasNext()){
             int j=0;
             Tweet tw = (Tweet) it.next();
-                tweetTable.setValueAt(tw.getUser(), i, j++);
-                tweetTable.setValueAt(tw.getTweet(), i++, j);
+            tweetTable.setValueAt(tw.getUser(), i, j++);
+            tweetTable.setValueAt(tw.getTweet(), i++, j);
         } 
         
         result.setText(resultData.size()+" results");
@@ -383,8 +383,8 @@ public class GUI1 extends javax.swing.JFrame {
     public void setTableRow(int s){
             int row = s;
             
-            if(row <= 18){
-                row = 18;
+            if(row <= 6){
+                row = 6;
             }
 
             Object[][] r = new Object[row][2];
@@ -399,6 +399,13 @@ public class GUI1 extends javax.swing.JFrame {
                         "Username","Tweet"
                     }
             ));
+            
+            tweetTable.getColumnModel().getColumn(1).setCellRenderer(new TextAreaRenderer());
+            tweetTable.setRowHeight(60);
+            tweetTable.getColumnModel().getColumn(0).setMaxWidth(90);
+            tweetTable.getColumnModel().getColumn(1).setMaxWidth(240);
+            tweetTable.setGridColor(new java.awt.Color(27, 39, 55));
+            tweetTable.setShowGrid(true);
         
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
