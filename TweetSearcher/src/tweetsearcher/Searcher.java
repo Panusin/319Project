@@ -5,9 +5,10 @@
  */
 package tweetsearcher;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
-import twitter4j.TwitterException;
+//import twitter4j.TwitterException;
 
 /**
  *
@@ -18,12 +19,11 @@ public class Searcher {
     int option;
     ArrayList<Tweet> searchData;
     ArrayList<Tweet> searchResult;
-
+    ResultSet  defaultTweet;
     public Searcher(){
-        
     }
     
-    public Searcher(int op, String w) throws TwitterException{
+    public Searcher(int op, String w){
         this.word = w;
         this.option = op;
         
