@@ -8,7 +8,7 @@ package tweetsearcher;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
-import twitter4j.TwitterException;
+//import twitter4j.TwitterException;
 
 public class SearchTUI {
     String filename = "";
@@ -18,13 +18,13 @@ public class SearchTUI {
     String word = "";
     Scanner sc = new Scanner(System.in);
     
-    public SearchTUI() throws TwitterException {
+    public SearchTUI()  {
         TweetData tweet = new TweetData();
         searchData = tweet.getSearchData();
         printWelcome();
     }
     
-    public SearchTUI(String filename) throws TwitterException{ //have't used yet. We need to get the file first.
+    public SearchTUI(String filename){ //have't used yet. We need to get the file first.
         this.filename = filename;
         //showReadingFile(filename);
         printWelcome();
@@ -37,14 +37,14 @@ public class SearchTUI {
         System.out.println("File name " + filename + " finish reading.");
     }
      
-     public void printWelcome() throws TwitterException{
+     public void printWelcome(){
          System.out.println("         Welcome to Tweet Searcher application.");
          System.out.println("You can search every tweet you want in this application!");
          System.out.println("       You can select mode that you want to search");
          printSelectOption();
      }
      
-     public void printSelectOption() throws TwitterException{
+     public void printSelectOption(){
          System.out.println("          - type '1' for search by : username");
          System.out.println("          - type '2' for search by : tweet");
          System.out.println("          - type '3' for search by : date");
@@ -60,7 +60,7 @@ public class SearchTUI {
          printAskForWord();
      }
      
-     public void printAskForWord() throws TwitterException{
+     public void printAskForWord(){
          System.out.print("Please type in a word you want search : ");
          word = sc.next();
          Searcher s = new Searcher(option,word);
@@ -68,7 +68,7 @@ public class SearchTUI {
          
      }
      
-     public void printTweetData(ArrayList<Tweet> arrayL) throws TwitterException{
+     public void printTweetData(ArrayList<Tweet> arrayL){
          Iterator it = arrayL.iterator();
          while(it.hasNext()){
              Tweet tw = (Tweet) it.next();
@@ -77,7 +77,7 @@ public class SearchTUI {
          printAskToCont();
      }
      
-     public void printAskToCont() throws TwitterException{
+     public void printAskToCont(){
          System.out.print("Do you want to continue searching? (y/n) : ");
          String yn = sc.next();
          while(!yn.toLowerCase().equals("y") && !yn.toLowerCase().equals("n")){
