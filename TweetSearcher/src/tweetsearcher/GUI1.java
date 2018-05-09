@@ -356,7 +356,6 @@ public class GUI1 extends javax.swing.JFrame {
     }
     
     public void showResult(){
-        System.out.println(resultData.size());
         setTableRow(resultData.size());
         clearTable(tweetTable);
         Iterator it = resultData.iterator();
