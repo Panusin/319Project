@@ -10,29 +10,35 @@ package tweetsearcher;
  * @author Dell
  */
 public class Tweet {
+
+    private int id;
     private String user;
     private String tweet;
-    private String date;
-    private String time;
-    private String test;
+    private String location;
+    private String device;
+    private String dateAdded;
+     
+    
+    public Tweet() {
 
-    public Tweet(){
-        
     }
-    
-    public Tweet(String user, String tweet){
+
+    public Tweet(String user, String tweet, String location) {
         this.user = user;
         this.tweet = tweet;
+        this.location = location;
     }
-    
-    public Tweet(String user, String tweet, String date, String time) {
+
+    public Tweet(int id, String user, String tweet, String location, String device, String dateAdded) {
+        this.id = id;
         this.user = user;
         this.tweet = tweet;
-        this.date = date;
-        this.time = time;
+        this.location = location;
+        this.device = device;
+        this.dateAdded = dateAdded;
     }
-    
-    public Tweet(String tweet){
+
+    public Tweet(String tweet) {
         this.tweet = tweet;
     }
 
@@ -52,30 +58,45 @@ public class Tweet {
         this.tweet = tweet;
     }
 
-    public String getDate() {
-        return date;
+    public int getId() {
+        return id;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(String dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public String getDate() {
+        return "";
     }
 
     public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getTest() {
-        return test;
-    }
-
-    public void setTest(String test) {
-        this.test = test;
+        return "";
     }
     
-    
-    
+    public String getDevice() {
+        return device;
+    }
+
+    public void setDevice(String device) {
+        this.device = device;
+    }
+
+
 }

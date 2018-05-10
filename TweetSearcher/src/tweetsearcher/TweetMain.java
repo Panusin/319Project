@@ -24,10 +24,11 @@ public class TweetMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        SearchTUI tui = new SearchTUI();    
+        //SearchTUI tui = new SearchTUI(); 
+         //GUI1 gui = new GUI1();
     }
     
-    public static Connection getConnect(){
+    public static Connection getConnection(){
         String connectionURL = "jdbc:mysql://mysql.ilab.sit.kmutt.ac.th:3306/twitter_data?zeroDateTimeBehavior=convertToNull";
         //ConnectionURL, username and password should be specified in getConnection()
         try {

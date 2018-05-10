@@ -28,48 +28,73 @@ public class GUI1 extends javax.swing.JFrame {
     ArrayList<Tweet> searchData = new ArrayList<>();
     ArrayList<Tweet> resultData = new ArrayList<>();
     ResultSet defaultTweet_set;
+    ResultSet rs;
     Searcher s = new Searcher();
-    
-    public GUI1(){
-        //try connect database
-         //TweetMain.getConnect();
-        
 
-       //
+    public GUI1() {
+
         initComponents();
         tweetTable.getTableHeader().setUI(null);
         TweetData tweet = new TweetData();
-        searchData = tweet.getSearchData();
+        searchData = tweet.getDataCollection();
         //s.setSearchData(searchData);
         //table.setVisible(false);
         //welcome.setVisible(true);
         showDefaultTweet();
+       // testQueryAllTweets();
     }
-    public void showDefaultTweet(){
-      Connection con = TweetMain.getConnect();
+    public void testQueryAllTweets(){
+        Connection con = TweetMain.getConnection();
+        String sql = "select * from twitter_tweet";
         try {
             Statement stm = con.createStatement();
-            String sql = "select * from twitter_tweet limit 100";
-            defaultTweet_set = stm.executeQuery(sql);
-            int row =0;
-            while(defaultTweet_set.next()){
-               //user
-               String userName = defaultTweet_set.getString(2);
-                //tweet
-                String tweet = defaultTweet_set.getString(3);
-               tweetTable.setValueAt(userName, row, 0);
-              tweetTable.setValueAt(tweet, row, 1);
-             
-               row++;
+            rs = stm.executeQuery(sql);
+            while(rs.next()){
+             int id = rs.getInt(1);
+             String name = rs.getString(2);
+             String tweet = rs.getString(3);
+             String location = rs.getString(4);
+             String device = rs.getString(5);
+             String date = rs.getString(6);
+             //Tweet e = new Tweet(id, name, tweet, location, date);
+             //searchData.add(e);
+             System.out.println("ID : " + id + " added to arrayList");
             }
+            System.out.println("All id are added to arraylist named searchData");
+            
+            
             
         } catch (SQLException ex) {
             Logger.getLogger(GUI1.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     
     }
 
-    
+    public void showDefaultTweet() {
+        Connection con = TweetMain.getConnection();
+        try {
+            Statement stm = con.createStatement();
+            String sql = "select * from twitter_tweet limit 100";
+            defaultTweet_set = stm.executeQuery(sql);
+            int row = 0;
+            while (defaultTweet_set.next()) {
+                //user
+                String userName = defaultTweet_set.getString(2);
+                //tweet
+                String tweet = defaultTweet_set.getString(3);
+                tweetTable.setValueAt(userName, row, 0);
+                tweetTable.setValueAt(tweet, row, 1);
+
+                row++;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GUI1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -121,7 +146,7 @@ public class GUI1 extends javax.swing.JFrame {
         jPanel3.add(searchBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 146, 20));
 
         searchBy.setForeground(new java.awt.Color(255, 255, 255));
-        searchBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Username", "Tweet", " " }));
+        searchBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Username", "Tweet" }));
         searchBy.setBorder(null);
         jPanel3.add(searchBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(186, 9, 100, 25));
 
@@ -134,6 +159,11 @@ public class GUI1 extends javax.swing.JFrame {
         searchBut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 searchButMouseClicked(evt);
+            }
+        });
+        searchBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButActionPerformed(evt);
             }
         });
         jPanel3.add(searchBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, 20, 20));
@@ -355,7 +385,7 @@ public class GUI1 extends javax.swing.JFrame {
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(table, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(welcome, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE))
+                .addComponent(welcome, javax.swing.GroupLayout.PREFERRED_SIZE, 336, Short.MAX_VALUE))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,7 +424,7 @@ public class GUI1 extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 531, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -404,6 +434,7 @@ public class GUI1 extends javax.swing.JFrame {
 
     private void searchButMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButMouseClicked
         search();
+        showResult();
         table.setVisible(true);
         welcome.setVisible(false);
     }//GEN-LAST:event_searchButMouseClicked
@@ -412,6 +443,10 @@ public class GUI1 extends javax.swing.JFrame {
         table.setVisible(false);
         welcome.setVisible(true);
     }//GEN-LAST:event_TweetSearcherMouseClicked
+
+    private void searchButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchButActionPerformed
 
     /**
      * @param args the command line arguments
@@ -444,42 +479,56 @@ public class GUI1 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
-                    new GUI1().setVisible(true);
-                    
+                new GUI1().setVisible(true);
             }
         });
     }
 
+    public void clearTable() {
+        tweetTable.clearSelection();
+    }
     public void search(){
+        this.clearTable();
         String word = searchBox.getText();
         String searchByText = (String) searchBy.getSelectedItem();
-        if(searchByText.equals("Username")){
-            s.searchByUsername(word);
-        }else if(searchByText.equals("Tweet")){
-            s.searchByTweet(word);
+        if (searchByText.equals("Username")) {
+           resultData = s.searchByName(word);
+        } else if (searchByText.equals("Tweet")) {
+           // same as above
         }
-        resultData = s.getSearchResult();
-        showResult();
-    }
     
-    public void showResult(){
+        
+    }
+
+//    public void search() {
+//        String word = searchBox.getText();
+//        String searchByText = (String) searchBy.getSelectedItem();
+//        if (searchByText.equals("Username")) {
+//            s.searchByUsername(word);
+//        } else if (searchByText.equals("Tweet")) {
+//            s.searchByTweet(word);
+//        }
+//        resultData = s.getSearchResult();
+//        showResult();
+//    }
+
+    public void showResult() {
         setTableRow(resultData.size());
         clearTable(tweetTable);
         Iterator it = resultData.iterator();
         System.out.println(resultData.size());
-        
-        int i=0;
-        while(it.hasNext()){
-            int j=0;
+
+        int i = 0;
+        while (it.hasNext()) {
+            int j = 0;
             Tweet tw = (Tweet) it.next();
             tweetTable.setValueAt(tw.getUser(), i, j++);
             tweetTable.setValueAt(tw.getTweet(), i++, j);
-        } 
-        
-        result.setText(resultData.size()+" results");
+        }
+
+        result.setText(resultData.size() + " results");
     }
-    
+
     public static void clearTable(JTable table) {
         for (int i = 0; i < table.getRowCount(); i++)
             for(int j = 0; j < table.getColumnCount(); j++) {
@@ -487,36 +536,36 @@ public class GUI1 extends javax.swing.JFrame {
           }
     }
     
-    public void setTableRow(int s){
-            int row = s;
-            
-            if(row <= 6){
-                row = 6;
-            }
+    public void setTableRow(int s) {
+        int row = s;
 
-            Object[][] r = new Object[row][2];
-            for(int i=0; i<row; i++){
-                for(int j=0; j<2; j++){
-                    r[i][j] = null;
-                }
+        if (row <= 6) {
+            row = 6;
+        }
+
+        Object[][] r = new Object[row][2];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < 2; j++) {
+                r[i][j] = null;
             }
-             
-            tweetTable.setModel(new javax.swing.table.DefaultTableModel(r ,
-                    new String [] {
-                        "Username","Tweet"
-                    }
-            ));
-            
-            tweetTable.getColumnModel().getColumn(1).setCellRenderer(new TextAreaRenderer());
-            tweetTable.setRowHeight(60);
-            tweetTable.getColumnModel().getColumn(0).setMaxWidth(90);
-            tweetTable.getColumnModel().getColumn(1).setMaxWidth(240);
-            tweetTable.setGridColor(new java.awt.Color(27, 39, 55));
-            tweetTable.setShowGrid(true);
-        
+        }
+
+        tweetTable.setModel(new javax.swing.table.DefaultTableModel(r,
+                new String[]{
+                    "Username", "Tweet"
+                }
+        ));
+
+        tweetTable.getColumnModel().getColumn(1).setCellRenderer(new TextAreaRenderer());
+        tweetTable.setRowHeight(60);
+        tweetTable.getColumnModel().getColumn(0).setMaxWidth(90);
+        tweetTable.getColumnModel().getColumn(1).setMaxWidth(240);
+        tweetTable.setGridColor(new java.awt.Color(27, 39, 55));
+        tweetTable.setShowGrid(true);
+
     }
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel TweetSearcher;
     private javax.swing.JLabel jLabel1;

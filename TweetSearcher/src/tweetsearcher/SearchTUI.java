@@ -20,7 +20,7 @@ public class SearchTUI {
     
     public SearchTUI()  {
         TweetData tweet = new TweetData();
-        searchData = tweet.getSearchData();
+        searchData = tweet.getDataCollection();
         printWelcome();
     }
     

@@ -5,12 +5,9 @@
  */
 package tweetsearcher;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,27 +23,30 @@ import java.util.logging.Logger;
  * @author Dell
  */
 public class TweetData {
-    String fileName;
-    File file;
-    ArrayList <Tweet> searchData = new ArrayList<>();
 
-    public TweetData(){
+    String fileName;
+    //File file;
+    ArrayList<Tweet> dataCollection;
+    
+    public TweetData() {
         //setSearchData();
         //getTweetFromWeb();
-    }
-    
-    public TweetData(String fileName) {
-        //this.searchData = new ArrayList<>();
-        this.file = new File(fileName);
-    }
-    
-//   
-    
-    public void setSearchData(){
+        dataCollection = new ArrayList<>();
         
     }
-    
-    public ArrayList<Tweet> getSearchData(){
-        return searchData;
+
+//   
+    public TweetData(String filename) {
+        this.fileName = filename;
+    }
+
+    public void setSearchData() {
+
+    }
+
+   
+
+    public ArrayList<Tweet> getDataCollection() {
+        return dataCollection;
     }
 }
