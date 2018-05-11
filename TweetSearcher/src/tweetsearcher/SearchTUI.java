@@ -63,8 +63,8 @@ public class SearchTUI {
      public void printAskForWord(){
          System.out.print("Please type in a word you want search : ");
          word = sc.next();
-         Searcher s = new Searcher(option,word);
-         printTweetData(s.getSearchResult());
+         //Searcher s = new Searcher(option,word);
+        // printTweetData(s.getSearchResult());
          
      }
      

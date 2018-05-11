@@ -352,14 +352,14 @@ public class GUI1 extends javax.swing.JFrame {
 
         result.setFont(new java.awt.Font("supermarket", 0, 14)); // NOI18N
         result.setForeground(new java.awt.Color(255, 255, 255));
-        result.setText("jLabel6");
+        result.setText("found count");
 
         javax.swing.GroupLayout tableLayout = new javax.swing.GroupLayout(table);
         table.setLayout(tableLayout);
         tableLayout.setHorizontalGroup(
             tableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tableLayout.createSequentialGroup()
-                .addContainerGap(146, Short.MAX_VALUE)
+                .addContainerGap(114, Short.MAX_VALUE)
                 .addComponent(result)
                 .addGap(144, 144, 144))
             .addGroup(tableLayout.createSequentialGroup()
@@ -494,6 +494,7 @@ public class GUI1 extends javax.swing.JFrame {
         if (searchByText.equals("Username")) {
            resultData = s.searchByName(word);
         } else if (searchByText.equals("Tweet")) {
+           resultData = s.searchByTweet(word);
            // same as above
         }
     

@@ -24,13 +24,13 @@ public class Searcher {
 
     String word = "";
     int option;
-    private HashMap<String, ArrayList<Tweet>> mapName;
-    private HashMap<String, ArrayList<Tweet>> mapWord;
-    private HashMap<String, ArrayList<Tweet>> mapLocation;
+    private HashMap<String,ArrayList<Tweet>> mapName;
+    private HashMap<String,ArrayList<Tweet>> mapWord;
+    private HashMap<String,ArrayList<Tweet>> mapLocation;
     ArrayList<Tweet> searchData;
     ArrayList<Tweet> searchResult;
-    private int SIZE = 200;
-    private int[] shiftTable = new int[SIZE];
+    private final int SIZE = 200;
+    private int[] shiftTable;
     ResultSet tweetSet;
 
     public Searcher() {
@@ -75,7 +75,7 @@ public class Searcher {
             System.out.println("found in Hash map");
             return searchResult = mapName.get(uName);
         } else {
-            String sql = "select * from twitter_tweet where screen_name = '" + uName + "'";
+            String sql = "select * from twitter_tweet where screen_name like '%" + uName + "%'";
             Connection con = TweetMain.getConnection();
 
             try {
@@ -108,9 +108,9 @@ public class Searcher {
             return searchResult = mapWord.get(word);
         } else {
             //create shift shiftTable for horspool algorithm
-            this.shifttable(word);
+            //this.shifttable(word);
             //method slow caused by this below sql
-            String sql = "select * from twitter_tweet";
+            String sql = "select * from twitter_tweet where text_tweet like '%" + word +"%'";
             Connection con = TweetMain.getConnection();
 
             try {
@@ -123,14 +123,16 @@ public class Searcher {
                     String location = tweetSet.getString(4);
                     String device = tweetSet.getString(5);
                     String addedDate = tweetSet.getString(6);
+                    Tweet tw = new Tweet(id, name, text_tweet, location, device, addedDate);
+                    searchResult.add(tw);
                     //horspool algorithm
-                    int positionFound = this.horspool(text_tweet, word);
-                    if (positionFound == -1) {
-                        System.out.println("ID : " + id + " is NOT FOUND!!");
-                    } else {
-                        Tweet tw = new Tweet(id, name, text_tweet, location, device, addedDate);
-                        searchResult.add(tw);
-                    }
+//                    int positionFound = this.horspool(text_tweet, word);
+//                    if (positionFound == -1) {
+//                        System.out.println("ID : " + id + " is NOT FOUND!!");
+//                    } else {
+//                        Tweet tw = new Tweet(id, name, text_tweet, location, device, addedDate);
+//                        searchResult.add(tw);
+//                    }
                     //System.out.println("tweet id : " + id + " owner is " + uName + " is added");
                 }
                 mapWord.put(word, searchResult);
@@ -140,6 +142,37 @@ public class Searcher {
             return searchResult;
         }
 
+    }
+    public ArrayList<Tweet> searchByLocation(String location){
+    searchResult = new ArrayList<>();
+        if (mapLocation.containsKey(location)) {//check in Hash Map first 
+            // return value of that key in HashMap name mapLocation <String,TweetData>
+            System.out.println("found in Hash map");
+            return searchResult = mapLocation.get(location);
+        } else {
+            String sql = "select * from twitter_tweet where location like '%" + location+ "%'";
+            Connection con = TweetMain.getConnection();
+            try {
+                Statement stm = con.createStatement();
+                tweetSet = stm.executeQuery(sql);
+                while (tweetSet.next()) {
+                    int id = tweetSet.getInt(1);
+                    String name = tweetSet.getString(2);
+                    String text_tweet = tweetSet.getString(3);
+                    String locationT = tweetSet.getString(4);
+                    String device = tweetSet.getString(5);
+                    String addedDate = tweetSet.getString(6);
+                    Tweet tw = new Tweet(id, name, text_tweet, locationT, device, addedDate);
+                    searchResult.add(tw);
+                    //System.out.println("tweet id : " + id + " owner is " + uName + " is added");
+                }
+                mapLocation.put(word, searchResult);
+            } catch (SQLException ex) {
+                Logger.getLogger(Searcher.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return searchResult;
+        }
+    
     }
 
     public ArrayList<Tweet> getSearchData() {
@@ -151,7 +184,7 @@ public class Searcher {
         // maybe we dont need this method.
         return searchResult;
     }
-
+    //old version
     public void searchByUsername(String word) {
         searchResult = new ArrayList<>();
         Iterator it = searchData.iterator();
@@ -191,7 +224,7 @@ public class Searcher {
             }
         }
     }
-
+     //end old version       
     public void searchByDate(String word) {
         System.out.println(word);
     }
@@ -201,7 +234,7 @@ public class Searcher {
     }
 
     private void shifttable(String pattern) {
-
+       shiftTable=new int[SIZE];
         int i, j, m;
         char p[] = pattern.toCharArray();
         m = pattern.length();
