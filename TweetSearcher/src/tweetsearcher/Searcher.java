@@ -267,4 +267,16 @@ public class Searcher {
         }
         return -1;
     }
+    
+    public HashMap<String,ArrayList<Tweet>> getMapName(){
+        return mapName;
+    }
+    
+    public HashMap<String,ArrayList<Tweet>> getMapWord(){
+        return mapWord;
+    }
+    
+    public HashMap<String,ArrayList<Tweet>> getMapLocation(){
+        return mapLocation;
+    }
 }
